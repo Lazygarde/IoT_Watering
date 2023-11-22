@@ -46,4 +46,16 @@ class MainViewModel @Inject constructor() : ViewModel() {
             }
         })
     }
+
+    fun addSensorData(sensorDataModel: SensorDataModel) {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("sensor")
+        firebaseDatabase.push().setValue(sensorDataModel)
+    }
+
+    fun clearData() {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("sensor")
+        firebaseDatabase.removeValue()
+    }
 }

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "285873515580",
+    "firebase_url": "https://watering-8bed6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "watering-8bed6",
+    "storage_bucket": "watering-8bed6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285873515580:android:76fcb0f3b02cdd2c11a739",
+        "android_client_info": {
+          "package_name": "dev.lazygarde.watering"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBujouKvfexg4BT4qMvzpje44seQJTzhOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

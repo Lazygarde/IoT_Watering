@@ -10,4 +10,19 @@
         android:name="dev.lazygarde.watering.ui.screen.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="dev.lazygarde.watering.ui.screen.chart.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dev.lazygarde.watering.ui.screen.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/speechFragment"
+        android:name="dev.lazygarde.watering.ui.screen.speech.SpeechFragment"
+        android:label="fragment_speech"
+        tools:layout="@layout/fragment_speech" />
 </navigation>

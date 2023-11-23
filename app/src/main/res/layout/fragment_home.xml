@@ -7,45 +7,5 @@
     tools:context=".ui.screen.home.HomeFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/rv_sensor_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/line_temperature_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-
-
-    <Button
-        android:id="@+id/btn_push_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push data"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_temperature_chart"
-        app:layout_constraintBottom_toTopOf="@+id/line_humidity_chart"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear data"
-        app:layout_constraintStart_toEndOf="@id/btn_push_data"
-        app:layout_constraintTop_toTopOf="@id/btn_push_data"
-        app:layout_constraintBottom_toBottomOf="@id/btn_push_data"
-        android:id="@+id/btn_clear_data"/>
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/line_humidity_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

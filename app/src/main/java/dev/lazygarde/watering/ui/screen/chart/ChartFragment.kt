@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -48,11 +47,6 @@ class ChartFragment : Fragment() {
         sensorDataAdapter = SensorDataAdapter()
 
 
-        binding.rvSensorData.apply {
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = sensorDataAdapter
-        }
         val temperatureEntries = mutableListOf<Entry>()
         val temperatureDataSet = LineDataSet(temperatureEntries, "Temperature").apply {
             setDrawCircles(true)
@@ -85,19 +79,19 @@ class ChartFragment : Fragment() {
         val humidityLineData = LineData(humidityDataSet)
         binding.lineHumidityChart.data = humidityLineData
 
-        binding.btnPushData.setOnClickListener {
-            viewModel.addSensorData(
-                SensorDataModel(
-                    id = System.currentTimeMillis(),
-                    temperature = ((15..25).random()).toDouble(),
-                    humidity = ((40..60).random()).toDouble(),
-                    time = System.currentTimeMillis()
-                )
-            )
-        }
-        binding.btnClearData.setOnClickListener {
-            viewModel.clearData()
-        }
+//        binding.btnPushData.setOnClickListener {
+//            viewModel.addSensorData(
+//                SensorDataModel(
+//                    id = System.currentTimeMillis(),
+//                    temperature = ((15..25).random()).toDouble(),
+//                    humidity = ((40..60).random()).toDouble(),
+//                    time = System.currentTimeMillis()
+//                )
+//            )
+//        }
+//        binding.btnClearData.setOnClickListener {
+//            viewModel.clearData()
+//        }
 
         lifecycleScope.launch {
             viewModel.sensorDataList.collect {

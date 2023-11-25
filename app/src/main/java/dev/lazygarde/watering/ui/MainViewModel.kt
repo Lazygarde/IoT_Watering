@@ -1,6 +1,5 @@
 package dev.lazygarde.watering.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
@@ -20,6 +19,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _sensorDataList = MutableStateFlow(listOf<SensorDataModel>())
     val sensorDataList = _sensorDataList.asStateFlow()
 
+    private val _sensorData = MutableStateFlow(SensorDataModel())
+    val sensorData = _sensorData.asStateFlow()
+
     private val _auto = MutableStateFlow(false)
     val auto = _auto.asStateFlow()
 
@@ -31,20 +33,17 @@ class MainViewModel @Inject constructor() : ViewModel() {
         val firebaseDatabase = firebaseInstance.getReference("sensor")
         firebaseDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val newList = mutableListOf<SensorDataModel>()
-                for (childSnapshot in snapshot.children) {
-                    try {
-                        val design = childSnapshot.getValue(SensorDataModel::class.java)
-                        design?.let {
-                            newList.add(it)
-                        }
-                    } catch (e: Exception) {
-                        Log.e("MainViewModel", e.toString())
-                    }
-
-                }
+                val temperature = snapshot.child("temperature").getValue(Double::class.java)
+                val humidity = snapshot.child("humidity").getValue(Double::class.java)
+                val soilMoisture = snapshot.child("soil_moisture").getValue(Double::class.java)
+                val sensor = SensorDataModel(
+                    temperature = temperature ?: 0.0,
+                    humidity = humidity ?: 0.0,
+                    soilMoisture = soilMoisture ?: 0.0,
+                )
                 viewModelScope.launch {
-                    _sensorDataList.emit(newList)
+                    _sensorData.emit(sensor)
+                    _sensorDataList.emit(_sensorDataList.value + listOf(sensor))
                 }
             }
 

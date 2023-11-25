@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import dev.lazygarde.watering.databinding.FragmentHomeBinding
+import dev.lazygarde.watering.section.sensordata.SensorDataModel
 import dev.lazygarde.watering.ui.MainViewModel
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: MainViewModel
+
+    private var sensorData = SensorDataModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +31,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.auto.collect{
+            viewModel.auto.collect {
                 binding.scAuto.isChecked = it
             }
         }
@@ -45,6 +48,15 @@ class HomeFragment : Fragment() {
 
         binding.scWaterPump.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setWaterPump(isChecked)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.sensorData.collect {
+                sensorData = it
+                binding.tvTemperatureValue.text = it.temperature.toString() + "°C"
+                binding.tvHumidityValue.text = it.humidity.toString() + "%"
+                binding.tvSoilMoistureValue.text = it.soilMoisture.toString() + "%"
+            }
         }
     }
 

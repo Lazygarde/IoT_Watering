@@ -20,14 +20,12 @@ import dev.lazygarde.watering.databinding.FragmentChartBinding
 import dev.lazygarde.watering.section.sensordata.SensorDataModel
 import dev.lazygarde.watering.ui.MainViewModel
 import dev.lazygarde.watering.ui.MyAxisFormatter
-import dev.lazygarde.watering.ui.adapter.SensorDataAdapter
 import kotlinx.coroutines.launch
 
 class ChartFragment : Fragment() {
 
     private lateinit var binding: FragmentChartBinding
     private lateinit var viewModel: MainViewModel
-    private lateinit var sensorDataAdapter: SensorDataAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +42,6 @@ class ChartFragment : Fragment() {
     private fun setUpView() {
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        sensorDataAdapter = SensorDataAdapter()
 
 
         val temperatureEntries = mutableListOf<Entry>()

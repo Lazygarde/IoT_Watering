@@ -20,6 +20,12 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _sensorDataList = MutableStateFlow(listOf<SensorDataModel>())
     val sensorDataList = _sensorDataList.asStateFlow()
 
+    private val _auto = MutableStateFlow(false)
+    val auto = _auto.asStateFlow()
+
+    private val _waterPump = MutableStateFlow(false)
+    val waterPump = _waterPump.asStateFlow()
+
     init {
         val firebaseInstance = FirebaseDatabase.getInstance()
         val firebaseDatabase = firebaseInstance.getReference("sensor")
@@ -45,6 +51,48 @@ class MainViewModel @Inject constructor() : ViewModel() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+
+        val firebaseDatabaseAuto = firebaseInstance.getReference("auto")
+        firebaseDatabaseAuto.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val auto = snapshot.getValue(Boolean::class.java)
+                viewModelScope.launch {
+                    _auto.emit(auto ?: false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        val firebaseDatabaseWaterPump = firebaseInstance.getReference("water_pump")
+        firebaseDatabaseWaterPump.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val waterPump = snapshot.getValue(Boolean::class.java)
+                viewModelScope.launch {
+                    _waterPump.emit(waterPump ?: false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    fun setAuto(auto: Boolean) {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("auto")
+        firebaseDatabase.setValue(auto)
+    }
+
+    fun setWaterPump(waterPump: Boolean) {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("water_pump")
+        firebaseDatabase.setValue(waterPump)
+    }
+
+    fun getLatestSensorData(): SensorDataModel? {
+        return sensorDataList.value.lastOrNull()
     }
 
     fun addSensorData(sensorDataModel: SensorDataModel) {

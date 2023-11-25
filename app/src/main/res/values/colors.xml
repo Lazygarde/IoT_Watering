@@ -5,4 +5,5 @@
 
     <color name="background">#061130</color>
     <color name="bottom_navigation_background">#030816</color>
+    <color name="tranparent">#00000000</color>
 </resources>

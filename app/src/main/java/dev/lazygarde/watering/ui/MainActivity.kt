@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.homeFragment
+                || destination.id == R.id.weatherFragment
                 || destination.id == R.id.chartFragment
-                || destination.id == R.id.speechFragment
                 || destination.id == R.id.settingsFragment
             ) {
                 binding.bottomNavigationView.visibility = View.VISIBLE

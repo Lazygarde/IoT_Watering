@@ -5,14 +5,17 @@
         android:id="@+id/homeFragment"
         android:icon="@drawable/icon_home"
         android:title="Home" />
+
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/icon_weather"
+        android:title="Weather" />
+
     <item
         android:id="@+id/chartFragment"
         android:icon="@drawable/icon_chart"
         android:title="Chart" />
-    <item
-        android:id="@+id/speechFragment"
-        android:icon="@drawable/icon_speech"
-        android:title="Speech" />
+
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/icon_settings"

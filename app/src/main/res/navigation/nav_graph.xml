@@ -11,18 +11,18 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/chartFragment"
-        android:name="dev.lazygarde.watering.ui.screen.chart.ChartFragment"
+        android:id="@+id/weatherFragment"
+        android:name="dev.lazygarde.watering.ui.screen.weather.WeatherFragment"
         android:label="fragment_chart"
-        tools:layout="@layout/fragment_chart" />
+        tools:layout="@layout/fragment_weather" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="dev.lazygarde.watering.ui.screen.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/speechFragment"
-        android:name="dev.lazygarde.watering.ui.screen.speech.SpeechFragment"
+        android:id="@+id/chartFragment"
+        android:name="dev.lazygarde.watering.ui.screen.chart.ChartFragment"
         android:label="fragment_speech"
-        tools:layout="@layout/fragment_speech" />
+        tools:layout="@layout/fragment_chart" />
 </navigation>

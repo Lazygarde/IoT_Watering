@@ -7,199 +7,240 @@
     android:background="@color/background"
     tools:context=".ui.screen.home.HomeFragment">
 
+    <TextView
+        android:id="@+id/tv_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Weather"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_home" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_weather"
+        android:id="@+id/weather_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/background_weather_home"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_now"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/background_custom"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_weather">
 
         <ImageView
+            android:id="@+id/iv_soil_moisture"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_location"
-            app:layout_constraintEnd_toStartOf="@id/tv_location"
-            app:layout_constraintTop_toTopOf="@id/tv_location"
-            app:srcCompat="@drawable/icon_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_soils"
             app:tint="@color/white" />
 
         <TextView
-            android:id="@+id/tv_location"
+            android:id="@+id/tv_soil_moisture"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Soil Moisture"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_soil_moisture"
+            app:layout_constraintStart_toEndOf="@id/iv_soil_moisture"
+            app:layout_constraintTop_toTopOf="@id/iv_soil_moisture" />
+
+        <TextView
+            android:id="@+id/tv_soil_moisture_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_bold"
-            android:text="Ha Noi"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/nunito_medium"
+
+            android:text="0%"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_soil_moisture"
+            app:layout_constraintStart_toEndOf="@id/tv_soil_moisture"
+            app:layout_constraintTop_toTopOf="@id/iv_soil_moisture" />
+
+        <ImageView
+            android:id="@+id/iv_temperature"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/iv_soil_moisture"
+            app:srcCompat="@drawable/icon_temperature"
+            app:tint="@color/white" />
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_temperature"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_location">
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Temperature"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_temperature"
+            app:layout_constraintStart_toEndOf="@id/iv_temperature"
+            app:layout_constraintTop_toTopOf="@id/iv_temperature" />
 
-            <ImageView
-                android:id="@+id/iv_weather"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
-                android:layout_marginEnd="40dp"
-                android:src="@drawable/icon_cloudy_sunny_day"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.508"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_temperature_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="32"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_temperature"
+            app:layout_constraintStart_toEndOf="@id/tv_temperature"
+            app:layout_constraintTop_toTopOf="@id/iv_temperature" />
 
-            <TextView
-                android:id="@+id/tv_temperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-80dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="21"
-                android:textColor="@color/white"
-                android:textSize="140sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_weather" />
+        <ImageView
+            android:id="@+id/iv_humidity"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_temperature"
+            app:srcCompat="@drawable/icon_humidity"
+            app:tint="@color/white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="O"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                app:layout_constraintEnd_toEndOf="@id/tv_temperature"
-                app:layout_constraintTop_toTopOf="@id/tv_temperature" />
+        <TextView
+            android:id="@+id/tv_humidity"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Humidity"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_humidity"
+            app:layout_constraintStart_toEndOf="@id/iv_humidity"
+            app:layout_constraintTop_toTopOf="@id/iv_humidity" />
 
-            <TextView
-                android:id="@+id/tv_weather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_medium"
-                android:text="Cloudy Sunny"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_temperature"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday, 17 May"
-                android:textSize="16sp"
-                android:textColor="#59b4ff"
-                android:fontFamily="@font/nunito_medium"
-                app:layout_constraintTop_toBottomOf="@id/tv_weather"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <TextView
+            android:id="@+id/tv_humidity_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="60%"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_humidity"
+            app:layout_constraintStart_toEndOf="@id/tv_humidity"
+            app:layout_constraintTop_toTopOf="@id/iv_humidity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <TextView
-        android:id="@+id/tv_now"
+        android:id="@+id/tv_watering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="Now"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Watering"
         android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/ll_weather_info"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weather_layout" />
 
-    <LinearLayout
-        android:id="@+id/ll_weather_info"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/watering_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="24dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_margin="16dp"
+        android:background="@drawable/background_custom"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_watering">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/iv_auto"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_auto"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_auto"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:srcCompat="@drawable/icon_predict"
-                app:tint="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="67%"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_medium"
-                android:text="Chance of rain"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:layout_marginStart="4dp"
+            android:text="Auto"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_auto"
+            app:layout_constraintStart_toEndOf="@id/iv_auto"
+            app:layout_constraintTop_toTopOf="@id/iv_auto" />
 
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sc_auto"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:thumb="@drawable/thumb_backgrounds"
+            app:layout_constraintBottom_toBottomOf="@id/iv_auto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_auto"
+            app:track="@drawable/track_backgrounds" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:srcCompat="@drawable/icon_humidity"
-                app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/iv_water_pump"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_auto"
+            app:srcCompat="@drawable/icon_temperature"
+            app:tint="@color/white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="60%"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tv_water_pump"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Water Pump"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_water_pump"
+            app:layout_constraintStart_toEndOf="@id/iv_water_pump"
+            app:layout_constraintTop_toTopOf="@id/iv_water_pump" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_medium"
-                android:text="Humidity"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sc_water_pump"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/thumb_backgrounds"
+            app:layout_constraintBottom_toBottomOf="@id/iv_water_pump"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_water_pump"
+            app:track="@drawable/track_backgrounds" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

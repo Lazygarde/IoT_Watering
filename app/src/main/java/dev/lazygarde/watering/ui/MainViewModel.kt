@@ -78,6 +78,61 @@ class MainViewModel @Inject constructor() : ViewModel() {
         })
     }
 
+
+    fun getAnswerFromSpeech(text: String): String {
+        val lowerCaseText = text.toLowerCase()
+        return when {
+            lowerCaseText.contains("turn on") -> {
+                when {
+                    lowerCaseText.contains("auto") -> {
+                        setAuto(true)
+                        "Auto mode is on"
+                    }
+                    lowerCaseText.contains("water pump") -> {
+                        setWaterPump(true)
+                        "Water pump is on"
+                    }
+                    else -> {
+                        "I don't understand"
+                    }
+                }
+            }
+            lowerCaseText.contains("turn off") -> {
+                when {
+                    lowerCaseText.contains("auto") -> {
+                        setAuto(false)
+                        "Auto mode is off"
+                    }
+                    lowerCaseText.contains("water pump") -> {
+                        setWaterPump(false)
+                        "Water pump is off"
+                    }
+                    else -> {
+                        "I don't understand"
+                    }
+                }
+            }
+            lowerCaseText.contains("temperature") -> {
+                "The temperature is ${sensorData.value.temperature} degree celsius"
+            }
+            lowerCaseText.contains("humidity") -> {
+                "The humidity is ${sensorData.value.humidity} percent"
+            }
+            lowerCaseText.contains("soil moisture") -> {
+                "The soil moisture is ${sensorData.value.soilMoisture} percent"
+            }
+            lowerCaseText.contains("auto") -> {
+                "Auto mode is ${auto.value}"
+            }
+            lowerCaseText.contains("water pump") -> {
+                "Water pump is ${waterPump.value}"
+            }
+            else -> {
+                "I don't understand"
+            }
+        }
+    }
+
     fun setAuto(auto: Boolean) {
         val firebaseInstance = FirebaseDatabase.getInstance()
         val firebaseDatabase = firebaseInstance.getReference("auto")

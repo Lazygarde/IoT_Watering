@@ -8,9 +8,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lazygarde.watering.section.sensordata.SensorDataModel
+import dev.lazygarde.watering.section.weather.RetrofitHelper
+import dev.lazygarde.watering.section.weather.WeatherApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +32,12 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _waterPump = MutableStateFlow(false)
     val waterPump = _waterPump.asStateFlow()
 
+    private val _weatherStatus = MutableStateFlow("")
+    val weatherStatus = _weatherStatus.asStateFlow()
+
     init {
+
+        val api = RetrofitHelper.getInstance().create(WeatherApi::class.java)
         val firebaseInstance = FirebaseDatabase.getInstance()
         val firebaseDatabase = firebaseInstance.getReference("sensor")
         firebaseDatabase.addValueEventListener(object : ValueEventListener {
@@ -44,6 +53,24 @@ class MainViewModel @Inject constructor() : ViewModel() {
                 viewModelScope.launch {
                     _sensorData.emit(sensor)
                     _sensorDataList.emit(_sensorDataList.value + listOf(sensor))
+                }
+
+                viewModelScope.launch {
+                    try {
+                        val weather = withContext(Dispatchers.IO) {
+                            api.getWeather(
+                                tempmax = getMaxTemperature(),
+                                tempmin = getMinTemperature(),
+                                humidity = sensor.humidity,
+                                temp = sensor.temperature,
+                            )
+                        }
+
+                        _weatherStatus.emit(weather.result)
+                    }
+                    catch (e: Exception) {
+                    }
+
                 }
             }
 
@@ -78,6 +105,14 @@ class MainViewModel @Inject constructor() : ViewModel() {
         })
     }
 
+    fun getMinTemperature(): Double {
+        return sensorDataList.value.minOf { it.temperature }
+    }
+
+    fun getMaxTemperature(): Double {
+        return sensorDataList.value.maxOf { it.temperature }
+    }
+
 
     fun getAnswerFromSpeech(text: String): String {
         val lowerCaseText = text.toLowerCase()
@@ -88,45 +123,56 @@ class MainViewModel @Inject constructor() : ViewModel() {
                         setAuto(true)
                         "Auto mode is on"
                     }
+
                     lowerCaseText.contains("water pump") -> {
                         setWaterPump(true)
                         "Water pump is on"
                     }
+
                     else -> {
                         "I don't understand"
                     }
                 }
             }
+
             lowerCaseText.contains("turn off") -> {
                 when {
                     lowerCaseText.contains("auto") -> {
                         setAuto(false)
                         "Auto mode is off"
                     }
+
                     lowerCaseText.contains("water pump") -> {
                         setWaterPump(false)
                         "Water pump is off"
                     }
+
                     else -> {
                         "I don't understand"
                     }
                 }
             }
+
             lowerCaseText.contains("temperature") -> {
                 "The temperature is ${sensorData.value.temperature} degree celsius"
             }
+
             lowerCaseText.contains("humidity") -> {
                 "The humidity is ${sensorData.value.humidity} percent"
             }
+
             lowerCaseText.contains("soil moisture") -> {
                 "The soil moisture is ${sensorData.value.soilMoisture} percent"
             }
+
             lowerCaseText.contains("auto") -> {
                 "Auto mode is ${auto.value}"
             }
+
             lowerCaseText.contains("water pump") -> {
                 "Water pump is ${waterPump.value}"
             }
+
             else -> {
                 "I don't understand"
             }

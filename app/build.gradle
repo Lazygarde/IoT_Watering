@@ -32,7 +32,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
     kotlinOptions {
@@ -85,5 +85,11 @@ dependencies {
     implementation 'com.airbnb.android:lottie:5.2.0'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // GSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
 }

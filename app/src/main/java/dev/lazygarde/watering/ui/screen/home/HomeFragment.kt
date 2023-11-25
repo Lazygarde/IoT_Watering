@@ -2,6 +2,7 @@ package dev.lazygarde.watering.ui.screen.home
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import dev.lazygarde.watering.databinding.FragmentHomeBinding
 import dev.lazygarde.watering.section.sensordata.SensorDataModel
+import dev.lazygarde.watering.section.weather.RetrofitHelper
+import dev.lazygarde.watering.section.weather.WeatherApi
 import dev.lazygarde.watering.ui.MainViewModel
 import dev.lazygarde.watering.ui.dialog.SpeechToTextDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class HomeFragment : Fragment() {

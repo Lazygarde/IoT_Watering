@@ -50,7 +50,6 @@
                 android:id="@+id/iv_weather"
                 android:layout_width="280dp"
                 android:layout_height="280dp"
-                android:layout_marginEnd="40dp"
                 android:src="@drawable/icon_cloudy_sunny_day"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.508"
@@ -63,23 +62,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-80dp"
                 android:fontFamily="@font/nunito_bold"
-                android:text="21"
+                android:text="21°C"
                 android:textColor="@color/white"
-                android:textSize="140sp"
+                android:textSize="100sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_weather" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="O"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                app:layout_constraintEnd_toEndOf="@id/tv_temperature"
-                app:layout_constraintTop_toTopOf="@id/tv_temperature" />
 
             <TextView
                 android:id="@+id/tv_weather"
@@ -89,6 +78,7 @@
                 android:text="Cloudy Sunny"
                 android:textColor="@color/white"
                 android:textSize="24sp"
+                android:layout_marginBottom="-16dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_temperature"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -144,6 +134,7 @@
                 app:tint="@color/white" />
 
             <TextView
+                android:id="@+id/tv_predict"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -181,6 +172,7 @@
                 app:tint="@color/white" />
 
             <TextView
+                android:id="@+id/tv_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

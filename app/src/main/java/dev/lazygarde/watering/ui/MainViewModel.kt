@@ -49,6 +49,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
                     temperature = temperature ?: 0.0,
                     humidity = humidity ?: 0.0,
                     soilMoisture = soilMoisture ?: 0.0,
+                    time = System.currentTimeMillis()
                 )
                 viewModelScope.launch {
                     _sensorData.emit(sensor)

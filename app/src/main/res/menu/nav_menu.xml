@@ -16,8 +16,8 @@
         android:icon="@drawable/icon_chart"
         android:title="Chart" />
 
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/icon_settings"
-        android:title="Settings" />
+<!--    <item-->
+<!--        android:id="@+id/settingsFragment"-->
+<!--        android:icon="@drawable/icon_settings"-->
+<!--        android:title="Settings" />-->
 </menu>

@@ -74,23 +74,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_humidity" />
 
-            <Button
-                android:id="@+id/btn_push_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Push data"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_humidity_chart" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_push_data"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Push data"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/line_humidity_chart" />-->
 
-            <Button
-                android:id="@+id/btn_clear_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clear data"
-                app:layout_constraintBottom_toBottomOf="@id/btn_push_data"
-                app:layout_constraintStart_toEndOf="@id/btn_push_data"
-                app:layout_constraintTop_toTopOf="@id/btn_push_data" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_clear_data"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Clear data"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/btn_push_data"-->
+<!--                app:layout_constraintStart_toEndOf="@id/btn_push_data"-->
+<!--                app:layout_constraintTop_toTopOf="@id/btn_push_data" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

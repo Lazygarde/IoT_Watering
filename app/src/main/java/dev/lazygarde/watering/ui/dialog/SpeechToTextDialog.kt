@@ -72,10 +72,13 @@ class SpeechToTextDialog : BottomSheetDialogFragment() {
             }
 
             override fun onPartialResults(p0: Bundle?) {
+                val matches = p0?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (matches != null && matches.size > 0) {
+                    binding.tvContent.text = matches[0]
+                }
             }
 
             override fun onEvent(p0: Int, p1: Bundle?) {
-                binding.tvContent.text = p1?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.get(0) ?: ""
             }
 
         })

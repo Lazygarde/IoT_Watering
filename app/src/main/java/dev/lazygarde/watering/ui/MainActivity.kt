@@ -1,7 +1,12 @@
 package dev.lazygarde.watering.ui
 
+import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -18,10 +23,22 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window?.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            @Suppress("DEPRECATION")
+            window?.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
         setUpNavHost()
-
     }
+
+
+
+
+
 
     private fun setUpNavHost() {
 
@@ -34,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.homeFragment
                 || destination.id == R.id.weatherFragment
                 || destination.id == R.id.chartFragment
-                || destination.id == R.id.settingsFragment
             ) {
                 binding.bottomNavigationView.visibility = View.VISIBLE
             } else {

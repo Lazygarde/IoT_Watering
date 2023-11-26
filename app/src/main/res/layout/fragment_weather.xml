@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/new_bg"
     tools:context=".ui.screen.weather.WeatherFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -106,7 +106,7 @@
         android:layout_marginHorizontal="24dp"
         android:fontFamily="@font/nunito_bold"
         android:text="Now"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/ll_weather_info"
         app:layout_constraintStart_toStartOf="parent" />
@@ -131,7 +131,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 app:srcCompat="@drawable/icon_predict"
-                app:tint="@color/white" />
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/tv_predict"
@@ -140,7 +140,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="67%"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
@@ -148,14 +148,14 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
                 android:text="Chance of rain"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:background="@color/black" />
 
 
         <LinearLayout
@@ -169,7 +169,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 app:srcCompat="@drawable/icon_humidity"
-                app:tint="@color/white" />
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/tv_humidity"
@@ -178,7 +178,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="60%"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <TextView
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_medium"
                 android:text="Humidity"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>
 

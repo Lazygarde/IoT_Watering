@@ -91,5 +91,7 @@ dependencies {
 
     // GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.google.firebase:firebase-config:21.0.1'
+
 
 }

@@ -1,11 +1,14 @@
 package dev.lazygarde.watering.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lazygarde.watering.section.sensordata.SensorDataModel
 import dev.lazygarde.watering.section.weather.RetrofitHelper
@@ -35,9 +38,40 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _weatherStatus = MutableStateFlow("")
     val weatherStatus = _weatherStatus.asStateFlow()
 
-    init {
+    private val _soilMoistureThrehold = MutableStateFlow(0.0)
+    val soilMoistureThrehold = _soilMoistureThrehold.asStateFlow()
 
-        val api = RetrofitHelper.getInstance().create(WeatherApi::class.java)
+    private val _humidityThrehold = MutableStateFlow(0.0)
+    val humidityThrehold = _humidityThrehold.asStateFlow()
+
+    private val _temperatureThrehold = MutableStateFlow(0.0)
+    val temperatureThrehold = _temperatureThrehold.asStateFlow()
+
+    init {
+        FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+               viewModelScope.launch(Dispatchers.IO) {
+                   try{
+                       val baseUrl = FirebaseRemoteConfig.getInstance().getString("base_url")
+                       Log.d("MainViewModel", "baseUrl: $baseUrl")
+                       val api = RetrofitHelper.getInstance(baseUrl).create(WeatherApi::class.java)
+                       val weather = withContext(Dispatchers.IO) {
+                           api.getWeather(
+                               tempmax = getMaxTemperature(),
+                               tempmin = getMinTemperature(),
+                               humidity = sensorData.value.humidity,
+                               temp = sensorData.value.temperature,
+                           )
+                       }
+                       _weatherStatus.value = weather.result
+                   }
+                     catch (e: Exception){
+                          Log.e("MainViewModel", "Error: ${e.message}")
+                     }
+
+               }
+            }
+        }
         val firebaseInstance = FirebaseDatabase.getInstance()
         val firebaseDatabase = firebaseInstance.getReference("sensor")
         firebaseDatabase.addValueEventListener(object : ValueEventListener {
@@ -55,23 +89,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
                     _sensorDataList.emit(_sensorDataList.value + listOf(sensor))
                 }
 
-                viewModelScope.launch {
-                    try {
-                        val weather = withContext(Dispatchers.IO) {
-                            api.getWeather(
-                                tempmax = getMaxTemperature(),
-                                tempmin = getMinTemperature(),
-                                humidity = sensor.humidity,
-                                temp = sensor.temperature,
-                            )
-                        }
 
-                        _weatherStatus.emit(weather.result)
-                    }
-                    catch (e: Exception) {
-                    }
-
-                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -103,7 +121,49 @@ class MainViewModel @Inject constructor() : ViewModel() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+
+        val firebaseDatabaseSoilMoistureThrehold =
+            firebaseInstance.getReference("soil_moisture_threhold")
+        firebaseDatabaseSoilMoistureThrehold.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val soilMoistureThrehold = snapshot.getValue(Double::class.java)
+                viewModelScope.launch {
+                    _soilMoistureThrehold.emit(soilMoistureThrehold ?: 0.0)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        val firebaseDatabaseHumidityThrehold = firebaseInstance.getReference("humidity_threhold")
+        firebaseDatabaseHumidityThrehold.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val humidityThrehold = snapshot.getValue(Double::class.java)
+                viewModelScope.launch {
+                    _humidityThrehold.emit(humidityThrehold ?: 0.0)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        val firebaseDatabaseTemperatureThrehold =
+            firebaseInstance.getReference("temperature_threhold")
+        firebaseDatabaseTemperatureThrehold.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val temperatureThrehold = snapshot.getValue(Double::class.java)
+                viewModelScope.launch {
+                    _temperatureThrehold.emit(temperatureThrehold ?: 0.0)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
+
 
     fun getMinTemperature(): Double {
         return sensorDataList.value.minOf { it.temperature }
@@ -177,6 +237,24 @@ class MainViewModel @Inject constructor() : ViewModel() {
                 "I don't understand"
             }
         }
+    }
+
+    fun setHumidityThrehold(humidityThrehold: Double) {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("humidity_threhold")
+        firebaseDatabase.setValue(humidityThrehold)
+    }
+
+    fun setTemperatureThrehold(temperatureThrehold: Double) {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("temperature_threhold")
+        firebaseDatabase.setValue(temperatureThrehold)
+    }
+
+    fun setSoilMoistureThrehold(soilMoistureThrehold: Double) {
+        val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseDatabase = firebaseInstance.getReference("soil_moisture_threhold")
+        firebaseDatabase.setValue(soilMoistureThrehold)
     }
 
     fun setAuto(auto: Boolean) {

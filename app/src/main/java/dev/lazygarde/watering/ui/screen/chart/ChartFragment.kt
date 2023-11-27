@@ -11,16 +11,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import dev.lazygarde.watering.databinding.FragmentChartBinding
 import dev.lazygarde.watering.section.sensordata.SensorDataModel
 import dev.lazygarde.watering.ui.MainViewModel
-import dev.lazygarde.watering.ui.MyAxisFormatter
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ChartFragment : Fragment() {
 
@@ -148,7 +152,13 @@ class ChartFragment : Fragment() {
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false)
-                valueFormatter = MyAxisFormatter(firstTime)
+                valueFormatter = object : IndexAxisValueFormatter() {
+                    private val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                        val timestamp = firstTime + value.toLong() * 1000
+                        return dateFormat.format(Date(timestamp))
+                    }
+                }
                 // Set the maximum number of visible entries
                 setLabelCount(5, true)
             }

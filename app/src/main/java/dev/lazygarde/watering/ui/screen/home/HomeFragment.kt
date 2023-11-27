@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
             viewModel.setWaterPump(isChecked)
         }
 
-        binding.animationView.setOnClickListener {
+        binding.ivMic.setOnClickListener {
             SpeechToTextDialog().apply {
                 onSpeechToTextResult = {
                     textToSpeech.speak(viewModel.getAnswerFromSpeech(it), TextToSpeech.QUEUE_FLUSH, null, null)

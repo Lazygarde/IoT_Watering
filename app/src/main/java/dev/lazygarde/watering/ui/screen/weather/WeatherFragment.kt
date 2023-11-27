@@ -1,6 +1,7 @@
 package dev.lazygarde.watering.ui.screen.weather
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import dev.lazygarde.watering.R
 import dev.lazygarde.watering.databinding.FragmentWeatherBinding
 import dev.lazygarde.watering.ui.MainViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class WeatherFragment : Fragment() {
 
@@ -56,7 +60,14 @@ class WeatherFragment : Fragment() {
                 binding.tvHumidity.text = it.humidity.toString() + "%"
             }
         }
+        binding.tvDate.text = getCurrentTime()
 
+    }
+
+    private fun getCurrentTime(): String {
+        val currentTime = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
+        return sdf.format(currentTime)
     }
 
 }

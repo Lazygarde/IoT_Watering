@@ -32,20 +32,22 @@ class WeatherFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.weatherStatus.collect {
-//                binding.tvWeather.text = it
-//                if (it == "Rain") {
-//                    Glide.with(this@WeatherFragment).load(R.drawable.icon_rain)
-//                        .into(binding.ivWeather)
-//                } else if (it == "Clear") {
-//                    Glide.with(this@WeatherFragment).load(R.drawable.icon_clear_day)
-//                        .into(binding.ivWeather)
-//                } else if (it == "Overcast") {
-//                    Glide.with(this@WeatherFragment).load(R.drawable.icon_cloudy_day)
-//                        .into(binding.ivWeather)
-//                } else {
-//                    Glide.with(this@WeatherFragment).load(R.drawable.icon_cloudy_sunny_day)
-//                        .into(binding.ivWeather)
-//                }
+                if (it != "") {
+                    binding.tvWeather.text = it
+                    if (it == "Rain") {
+                        Glide.with(this@WeatherFragment).load(R.drawable.icon_rain)
+                            .into(binding.ivWeather)
+                    } else if (it == "Clear") {
+                        Glide.with(this@WeatherFragment).load(R.drawable.icon_clear_day)
+                            .into(binding.ivWeather)
+                    } else if (it == "Overcast") {
+                        Glide.with(this@WeatherFragment).load(R.drawable.icon_cloudy_day)
+                            .into(binding.ivWeather)
+                    } else {
+                        Glide.with(this@WeatherFragment).load(R.drawable.icon_cloudy_sunny_day)
+                            .into(binding.ivWeather)
+                    }
+                }
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {

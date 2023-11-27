@@ -10,11 +10,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lazygarde.watering.section.sensordata.SensorDataModel
 import dev.lazygarde.watering.section.weather.RetrofitHelper
 import dev.lazygarde.watering.section.weather.WeatherApi
+import dev.lazygarde.watering.setup.remoteconfig.RemoteConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,8 +38,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val weatherStatus = _weatherStatus.asStateFlow()
 
     init {
-
-        val api = RetrofitHelper.getInstance().create(WeatherApi::class.java)
         val firebaseInstance = FirebaseDatabase.getInstance()
         val firebaseDatabase = firebaseInstance.getReference("sensor")
         firebaseDatabase.addValueEventListener(object : ValueEventListener {
@@ -56,20 +56,19 @@ class MainViewModel @Inject constructor() : ViewModel() {
                     _sensorDataList.emit(_sensorDataList.value + listOf(sensor))
                 }
 
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     try {
+                        val api = RetrofitHelper.getInstance(RemoteConfig.baseUrl).create(WeatherApi::class.java)
                         val weather = withContext(Dispatchers.IO) {
                             api.getWeather(
                                 tempmax = getMaxTemperature(),
                                 tempmin = getMinTemperature(),
-                                humidity = sensor.humidity,
-                                temp = sensor.temperature,
+                                humidity = sensorData.value.humidity,
+                                temp = sensorData.value.temperature,
                             )
                         }
-
-                        _weatherStatus.emit(weather.result)
-                    }
-                    catch (e: Exception) {
+                        _weatherStatus.value = weather.result
+                    } catch (_: Exception) {
                     }
 
                 }
@@ -106,17 +105,17 @@ class MainViewModel @Inject constructor() : ViewModel() {
         })
     }
 
-    fun getMinTemperature(): Double {
+    private fun getMinTemperature(): Double {
         return sensorDataList.value.minOf { it.temperature }
     }
 
-    fun getMaxTemperature(): Double {
+    private fun getMaxTemperature(): Double {
         return sensorDataList.value.maxOf { it.temperature }
     }
 
 
     fun getAnswerFromSpeech(text: String): String {
-        val lowerCaseText = text.toLowerCase()
+        val lowerCaseText = text.lowercase(Locale.ROOT)
         return when {
             lowerCaseText.contains("turn on") -> {
                 when {
@@ -190,21 +189,5 @@ class MainViewModel @Inject constructor() : ViewModel() {
         val firebaseInstance = FirebaseDatabase.getInstance()
         val firebaseDatabase = firebaseInstance.getReference("water_pump")
         firebaseDatabase.setValue(waterPump)
-    }
-
-    fun getLatestSensorData(): SensorDataModel? {
-        return sensorDataList.value.lastOrNull()
-    }
-
-    fun addSensorData(sensorDataModel: SensorDataModel) {
-        val firebaseInstance = FirebaseDatabase.getInstance()
-        val firebaseDatabase = firebaseInstance.getReference("sensor")
-        firebaseDatabase.push().setValue(sensorDataModel)
-    }
-
-    fun clearData() {
-        val firebaseInstance = FirebaseDatabase.getInstance()
-        val firebaseDatabase = firebaseInstance.getReference("sensor")
-        firebaseDatabase.removeValue()
     }
 }
